@@ -6,13 +6,13 @@ HINTS = [
     ["local variable",
      "Your function changes a global variable without saying so.\n"
      "Add this line at the top of the function:\n"
-     "    global Stack, TopOfStack"],
+     "    global Queue, HeadPointer, TailPointer"],
 
     ["index out of range",
      "You used an index outside the array.\n"
-     "  - Did you fill Stack with 8 elements (all -1) at the start?\n"
-     "  - Does Push check for full (TopOfStack == 7) BEFORE adding 1?\n"
-     "  - Editor: \"type a\".split(\" \") gives [\"type\", \"a\"] - the letter is at index 1."],
+     "  - Did you fill Queue with 8 elements (all -1) at the start?\n"
+     "  - Does Enqueue check for full (TailPointer == 7) BEFORE adding 1?\n"
+     "  - Canteen: \"join Bat\".split(\" \") gives [\"join\", \"Bat\"] - the name is at index 1."],
 
     ["can only concatenate str",
      "You tried to join a string and a number with +.\n"
