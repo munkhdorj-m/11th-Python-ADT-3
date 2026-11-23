@@ -1,6 +1,7 @@
 # Linear Queue 
 
 Read the Abstract Data Types lecture (Queue section) before you start.
+https://drive.google.com/file/d/1jXGQdSvuUYjGXl-PUuHMUzKWEBGQoARL/view?usp=sharing
 
 A queue is **First In, First Out (FIFO)** — like a line at the canteen. People
 join at the **back** and are served from the **front**.
