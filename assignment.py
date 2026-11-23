@@ -1,35 +1,47 @@
 # You can remove 'pass' if you written code in the function
-# Do NOT use .append() or .pop() inside Push() and Pop() - move TopOfStack yourself.
+# Do NOT use .append() or .pop() inside Enqueue() and Dequeue() - move the pointers yourself.
 
 # Exercise 1
-Stack = []
-TopOfStack = -1
-# Write code here to fill Stack with 8 elements, all -1
+Queue = []
+HeadPointer = 0
+TailPointer = -1
+# Write code here to fill Queue with 8 elements, all -1
 
 
-def Push(Item):
+def IsEmpty():
     # Write your code here
     pass
 
 
-def Pop():
+def IsFull():
     # Write your code here
     pass
 
 
 # Exercise 2
-def ShowStack():
+def Enqueue(Item):
     # Write your code here
     pass
 
 
 # Exercise 3
-def DecimalToBinary(Number):
+def Dequeue():
     # Write your code here
     pass
 
 
 # Exercise 4
-def Editor(Commands):
+def Peek():
+    # Write your code here
+    pass
+
+
+def ShowQueue():
+    # Write your code here
+    pass
+
+
+# Exercise 5
+def Canteen(Commands):
     # Write your code here
     pass
