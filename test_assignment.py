@@ -9,7 +9,7 @@ import assignment
 
 
 @pytest.fixture
-def s():
+def q():
     return importlib.reload(assignment)
 
 
@@ -30,160 +30,173 @@ def check_no_list_methods(function):
         if name in [".append", ".pop", ".insert", ".remove", ".extend", ".clear"]:
             pytest.fail(
                 function.__name__ + "() uses " + name + "(). "
-                "Change TopOfStack and use Stack[TopOfStack] instead."
+                "Move HeadPointer / TailPointer and use Queue[...] instead."
             )
 
 
-def test1_initial_stack(s):
-    assert s.Stack == [-1, -1, -1, -1, -1, -1, -1, -1]
-    assert s.TopOfStack == -1
+def build(q, items, head, tail):
+    q.Queue = []
+    for item in items:
+        q.Queue.append(item)
+    while len(q.Queue) < 8:
+        q.Queue.append(-1)
+    q.HeadPointer = head
+    q.TailPointer = tail
 
 
-def test1_push(s):
-    assert s.Push(15) == True
-    assert s.TopOfStack == 0
-    assert s.Stack[0] == 15
-    assert s.Push(27) == True
-    assert s.TopOfStack == 1
-    assert s.Stack[1] == 27
+def test1_initial_queue(q):
+    assert q.Queue == [-1, -1, -1, -1, -1, -1, -1, -1]
+    assert q.HeadPointer == 0
+    assert q.TailPointer == -1
 
 
-def test1_push_when_full(s):
+def test1_is_empty(q):
+    assert q.IsEmpty() == True
+    build(q, [5], 0, 0)
+    assert q.IsEmpty() == False
+    build(q, [10, 20, 30], 1, 2)
+    assert q.IsEmpty() == False
+    build(q, [10, 20, 30], 3, 2)
+    assert q.IsEmpty() == True
+
+
+def test1_is_full(q):
+    assert q.IsFull() == False
+    build(q, [1, 2, 3, 4, 5, 6, 7], 0, 6)
+    assert q.IsFull() == False
+    build(q, [1, 2, 3, 4, 5, 6, 7, 8], 0, 7)
+    assert q.IsFull() == True
+    build(q, [1, 2, 3, 4, 5, 6, 7, 8], 5, 7)
+    assert q.IsFull() == True
+
+
+def test2_enqueue(q):
+    assert q.Enqueue(15) == True
+    assert q.TailPointer == 0
+    assert q.Queue[0] == 15
+    assert q.Enqueue(27) == True
+    assert q.TailPointer == 1
+    assert q.Queue[1] == 27
+    assert q.HeadPointer == 0
+
+
+def test2_enqueue_after_dequeue(q):
+    build(q, [10, 20, 30], 2, 2)
+    assert q.Enqueue(40) == True
+    assert q.TailPointer == 3
+    assert q.Queue[3] == 40
+    assert q.HeadPointer == 2
+
+
+def test2_enqueue_when_full(q):
     for x in range(8):
-        assert s.Push(x) == True
-    assert s.Push(99) == False
-    assert s.TopOfStack == 7
-    assert s.Stack == [0, 1, 2, 3, 4, 5, 6, 7]
+        assert q.Enqueue(x) == True
+    assert q.Enqueue(99) == False
+    assert q.TailPointer == 7
+    assert q.Queue == [0, 1, 2, 3, 4, 5, 6, 7]
 
 
-def test1_pop(s):
-    s.Push(10)
-    s.Push(20)
-    s.Push(30)
-    assert s.Pop() == 30
-    assert s.TopOfStack == 1
-    assert s.Pop() == 20
-    assert s.Pop() == 10
-    assert s.TopOfStack == -1
-
-
-def test1_pop_when_empty(s):
-    assert s.Pop() == -1
-    assert s.TopOfStack == -1
-    s.Push(5)
-    s.Pop()
-    assert s.Pop() == -1
-    assert s.TopOfStack == -1
-
-
-def test1_uses_top_of_stack(s):
-    check_no_list_methods(s.Push)
-    check_no_list_methods(s.Pop)
+def test2_uses_tail_pointer(q):
+    check_no_list_methods(q.Enqueue)
     for x in range(10):
-        s.Push(x)
-    assert s.TopOfStack == 7
-    for x in range(10):
-        s.Pop()
-    assert s.TopOfStack == -1
-    assert len(s.Stack) == 8
+        q.Enqueue(x)
+    assert len(q.Queue) == 8
+    assert q.TailPointer == 7
 
 
-def test2_show_stack(s):
-    assert s.ShowStack() == ""
-    s.Stack[0] = 10
-    s.TopOfStack = 0
-    assert s.ShowStack() == "10"
-    s.Stack[1] = 20
-    s.Stack[2] = 30
-    s.TopOfStack = 2
-    assert s.ShowStack() == "30 20 10"
+def test3_dequeue(q):
+    build(q, [10, 20, 30], 0, 2)
+    assert q.Dequeue() == 10
+    assert q.HeadPointer == 1
+    assert q.Dequeue() == 20
+    assert q.HeadPointer == 2
+    assert q.Dequeue() == 30
+    assert q.HeadPointer == 3
+    assert q.TailPointer == 2
 
 
-def test2_ignores_old_items(s):
-    s.Stack[0] = 10
-    s.Stack[1] = 20
-    s.Stack[2] = 30
-    s.Stack[3] = 40
-    s.TopOfStack = 1
-    assert s.ShowStack() == "20 10"
+def test3_dequeue_when_empty(q):
+    assert q.Dequeue() == -1
+    assert q.HeadPointer == 0
+    assert q.TailPointer == -1
+    build(q, [10, 20, 30], 3, 2)
+    assert q.Dequeue() == -1
+    assert q.HeadPointer == 3
+    assert q.TailPointer == 2
 
 
-def test2_keeps_stack(s):
-    s.Stack[0] = 5
-    s.Stack[1] = 6
-    s.TopOfStack = 1
-    s.ShowStack()
-    s.ShowStack()
-    assert s.TopOfStack == 1
-    assert s.Stack[0] == 5
-    assert s.Stack[1] == 6
-    assert s.ShowStack() == "6 5"
+def test3_uses_head_pointer(q):
+    check_no_list_methods(q.Dequeue)
+    build(q, [10, 20, 30, 40], 0, 3)
+    q.Dequeue()
+    q.Dequeue()
+    assert len(q.Queue) == 8
+    assert q.HeadPointer == 2
+    assert q.Queue[2] == 30
+    assert q.Queue[3] == 40
 
 
-@pytest.mark.parametrize("number, expected", [
-    [5, "101"],
-    [10, "1010"],
-    [1, "1"],
-    [2, "10"],
-    [0, "0"],
-    [13, "1101"],
-    [128, "10000000"],
-    [255, "11111111"],
-])
-def test3_binary(s, number, expected):
-    assert s.DecimalToBinary(number) == expected
+def test4_peek(q):
+    assert q.Peek() == -1
+    build(q, [10, 20, 30, 40], 1, 3)
+    assert q.Peek() == 20
+    assert q.Peek() == 20
+    assert q.HeadPointer == 1
+    assert q.TailPointer == 3
+    build(q, [10, 20, 30, 40], 4, 3)
+    assert q.Peek() == -1
 
 
-def test3_starts_with_empty_stack(s):
-    s.Push(7)
-    s.Push(8)
-    assert s.DecimalToBinary(5) == "101"
-    assert s.TopOfStack == -1
-    s.Push(1)
-    assert s.DecimalToBinary(6) == "110"
+def test4_show_queue(q):
+    assert q.ShowQueue() == ""
+    build(q, [10], 0, 0)
+    assert q.ShowQueue() == "10"
+    build(q, [10, 20, 30, 40], 0, 3)
+    assert q.ShowQueue() == "10 20 30 40"
 
 
-def test3_uses_the_stack(s):
-    names = calls_in(s.DecimalToBinary)
-    for banned in ["bin", "format", ".format"]:
-        if banned in names:
-            pytest.fail("DecimalToBinary() uses " + banned + "(). Use the stack instead.")
-    assert "Push" in names, "DecimalToBinary() must call Push()."
-    assert "Pop" in names, "DecimalToBinary() must call Pop()."
-    assert s.DecimalToBinary(9) == "1001"
+def test4_show_ignores_old_items(q):
+    build(q, [10, 20, 30, 40, 50, 60], 2, 4)
+    assert q.ShowQueue() == "30 40 50"
+    assert q.HeadPointer == 2
+    assert q.TailPointer == 4
+    assert q.ShowQueue() == "30 40 50"
+    build(q, [10, 20, 30], 3, 2)
+    assert q.ShowQueue() == ""
 
 
 @pytest.mark.parametrize("commands, expected", [
-    [["type c", "type a", "type t"], "cat"],
-    [["type c", "type a", "type r", "undo", "type t"], "cat"],
-    [["type d", "type o", "type g", "undo", "undo", "undo"], ""],
-    [["undo", "type h", "type i"], "hi"],
-    [["type a", "undo", "undo", "type b"], "b"],
-    [[], ""],
+    [["join Bat", "join Anu", "serve", "join Saraa", "serve", "serve"], ["Bat", "Anu", "Saraa"]],
+    [["join Bat", "join Anu", "join Tom", "serve"], ["Bat"]],
+    [["serve", "join Bat"], []],
+    [["join Anu", "serve", "serve", "serve", "join Bold", "serve"], ["Anu", "Bold"]],
+    [[], []],
 ])
-def test4_editor(s, commands, expected):
-    assert s.Editor(commands) == expected
+def test5_canteen(q, commands, expected):
+    assert q.Canteen(commands) == expected
 
 
-def test4_stack_full(s):
+def test5_queue_full(q):
     commands = []
-    for letter in ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]:
-        commands.append("type " + letter)
-    assert s.Editor(commands) == "abcdefgh"
-    commands.append("undo")
-    commands.append("type z")
-    assert s.Editor(commands) == "abcdefgz"
+    for name in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]:
+        commands.append("join " + name)
+    for x in range(10):
+        commands.append("serve")
+    assert q.Canteen(commands) == ["A", "B", "C", "D", "E", "F", "G", "H"]
+    commands.append("join Z")
+    commands.append("serve")
+    assert q.Canteen(commands) == ["A", "B", "C", "D", "E", "F", "G", "H"]
 
 
-def test4_starts_with_empty_stack(s):
-    s.Push("x")
-    s.Push("y")
-    assert s.Editor(["type o", "type k"]) == "ok"
-    assert s.Editor(["type h", "type i"]) == "hi"
+def test5_starts_with_empty_queue(q):
+    q.Enqueue("X")
+    q.Enqueue("Y")
+    assert q.Canteen(["join Bat", "serve"]) == ["Bat"]
+    assert q.Canteen(["join Anu", "serve", "serve"]) == ["Anu"]
 
 
-def test4_uses_the_stack(s):
-    names = calls_in(s.Editor)
-    assert "Push" in names, "Editor() must call Push()."
-    assert "Pop" in names, "Editor() must call Pop()."
-    assert s.Editor(["type n", "type o", "type w", "undo"]) == "no"
+def test5_uses_the_queue(q):
+    names = calls_in(q.Canteen)
+    assert "Enqueue" in names, "Canteen() must call Enqueue()."
+    assert "Dequeue" in names, "Canteen() must call Dequeue()."
+    assert q.Canteen(["join Bat", "join Anu", "serve"]) == ["Bat"]
