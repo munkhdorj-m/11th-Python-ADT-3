@@ -28,168 +28,178 @@ jobs:
       - name: Install pytest
         run: pip install -r requirements.txt
 
-      - name: Ex 1 - Stack set up
-        id: ex1_initial_stack
+      - name: Ex 1 - Queue set up
+        id: ex1_initial_queue
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Stack set up
-          command: pytest test_assignment.py::test1_initial_stack
+          test-name: Ex 1 - Queue set up
+          command: pytest test_assignment.py::test1_initial_queue
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Push
-        id: ex1_push
+      - name: Ex 1 - IsEmpty
+        id: ex1_is_empty
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Push
-          command: pytest test_assignment.py::test1_push
+          test-name: Ex 1 - IsEmpty
+          command: pytest test_assignment.py::test1_is_empty
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Push when full
-        id: ex1_push_when_full
+      - name: Ex 1 - IsFull
+        id: ex1_is_full
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Push when full
-          command: pytest test_assignment.py::test1_push_when_full
+          test-name: Ex 1 - IsFull
+          command: pytest test_assignment.py::test1_is_full
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Pop
-        id: ex1_pop
+      - name: Ex 2 - Enqueue
+        id: ex2_enqueue
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Pop
-          command: pytest test_assignment.py::test1_pop
+          test-name: Ex 2 - Enqueue
+          command: pytest test_assignment.py::test2_enqueue
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Pop when empty
-        id: ex1_pop_when_empty
+      - name: Ex 2 - Enqueue after Dequeue
+        id: ex2_enqueue_after_dequeue
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Pop when empty
-          command: pytest test_assignment.py::test1_pop_when_empty
+          test-name: Ex 2 - Enqueue after Dequeue
+          command: pytest test_assignment.py::test2_enqueue_after_dequeue
           timeout: 2
           max-score: 1
 
-      - name: Ex 1 - Uses TopOfStack
-        id: ex1_uses_top_of_stack
+      - name: Ex 2 - Enqueue when full
+        id: ex2_enqueue_when_full
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 1 - Uses TopOfStack
-          command: pytest test_assignment.py::test1_uses_top_of_stack
+          test-name: Ex 2 - Enqueue when full
+          command: pytest test_assignment.py::test2_enqueue_when_full
           timeout: 2
           max-score: 1
 
-      - name: Ex 2 - ShowStack
-        id: ex2_show_stack
+      - name: Ex 2 - Uses TailPointer
+        id: ex2_uses_tail_pointer
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 2 - ShowStack
-          command: pytest test_assignment.py::test2_show_stack
+          test-name: Ex 2 - Uses TailPointer
+          command: pytest test_assignment.py::test2_uses_tail_pointer
           timeout: 2
           max-score: 1
 
-      - name: Ex 2 - Ignores old items
-        id: ex2_ignores_old_items
+      - name: Ex 3 - Dequeue
+        id: ex3_dequeue
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 2 - Ignores old items
-          command: pytest test_assignment.py::test2_ignores_old_items
+          test-name: Ex 3 - Dequeue
+          command: pytest test_assignment.py::test3_dequeue
           timeout: 2
           max-score: 1
 
-      - name: Ex 2 - Keeps stack
-        id: ex2_keeps_stack
+      - name: Ex 3 - Dequeue when empty
+        id: ex3_dequeue_when_empty
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 2 - Keeps stack
-          command: pytest test_assignment.py::test2_keeps_stack
+          test-name: Ex 3 - Dequeue when empty
+          command: pytest test_assignment.py::test3_dequeue_when_empty
           timeout: 2
           max-score: 1
 
-      - name: Ex 3 - Binary
-        id: ex3_binary
+      - name: Ex 3 - Uses HeadPointer
+        id: ex3_uses_head_pointer
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 3 - Binary
-          command: pytest test_assignment.py::test3_binary
+          test-name: Ex 3 - Uses HeadPointer
+          command: pytest test_assignment.py::test3_uses_head_pointer
           timeout: 2
           max-score: 1
 
-      - name: Ex 3 - Starts with empty stack
-        id: ex3_starts_with_empty_stack
+      - name: Ex 4 - Peek
+        id: ex4_peek
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 3 - Starts with empty stack
-          command: pytest test_assignment.py::test3_starts_with_empty_stack
+          test-name: Ex 4 - Peek
+          command: pytest test_assignment.py::test4_peek
           timeout: 2
           max-score: 1
 
-      - name: Ex 3 - Uses the stack
-        id: ex3_uses_the_stack
+      - name: Ex 4 - ShowQueue
+        id: ex4_show_queue
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 3 - Uses the stack
-          command: pytest test_assignment.py::test3_uses_the_stack
+          test-name: Ex 4 - ShowQueue
+          command: pytest test_assignment.py::test4_show_queue
           timeout: 2
           max-score: 1
 
-      - name: Ex 4 - Editor
-        id: ex4_editor
+      - name: Ex 4 - ShowQueue ignores old items
+        id: ex4_show_ignores_old_items
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 4 - Editor
-          command: pytest test_assignment.py::test4_editor
+          test-name: Ex 4 - ShowQueue ignores old items
+          command: pytest test_assignment.py::test4_show_ignores_old_items
           timeout: 2
           max-score: 1
 
-      - name: Ex 4 - Stack full
-        id: ex4_stack_full
+      - name: Ex 5 - Canteen
+        id: ex5_canteen
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 4 - Stack full
-          command: pytest test_assignment.py::test4_stack_full
+          test-name: Ex 5 - Canteen
+          command: pytest test_assignment.py::test5_canteen
           timeout: 2
           max-score: 1
 
-      - name: Ex 4 - Starts with empty stack
-        id: ex4_starts_with_empty_stack
+      - name: Ex 5 - Canteen queue full
+        id: ex5_queue_full
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 4 - Starts with empty stack
-          command: pytest test_assignment.py::test4_starts_with_empty_stack
+          test-name: Ex 5 - Canteen queue full
+          command: pytest test_assignment.py::test5_queue_full
           timeout: 2
           max-score: 1
 
-      - name: Ex 4 - Uses the stack
-        id: ex4_uses_the_stack
+      - name: Ex 5 - Canteen starts empty
+        id: ex5_starts_with_empty_queue
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: Ex 4 - Uses the stack
-          command: pytest test_assignment.py::test4_uses_the_stack
+          test-name: Ex 5 - Canteen starts empty
+          command: pytest test_assignment.py::test5_starts_with_empty_queue
+          timeout: 2
+          max-score: 1
+
+      - name: Ex 5 - Canteen uses the queue
+        id: ex5_uses_the_queue
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Ex 5 - Canteen uses the queue
+          command: pytest test_assignment.py::test5_uses_the_queue
           timeout: 2
           max-score: 1
 
       - name: Autograding Reporter
         uses: classroom-resources/autograding-grading-reporter@v1
         env:
-          EX1_INITIAL_STACK_RESULTS: "${{ steps.ex1_initial_stack.outputs.result }}"
-          EX1_PUSH_RESULTS: "${{ steps.ex1_push.outputs.result }}"
-          EX1_PUSH_WHEN_FULL_RESULTS: "${{ steps.ex1_push_when_full.outputs.result }}"
-          EX1_POP_RESULTS: "${{ steps.ex1_pop.outputs.result }}"
-          EX1_POP_WHEN_EMPTY_RESULTS: "${{ steps.ex1_pop_when_empty.outputs.result }}"
-          EX1_USES_TOP_OF_STACK_RESULTS: "${{ steps.ex1_uses_top_of_stack.outputs.result }}"
-          EX2_SHOW_STACK_RESULTS: "${{ steps.ex2_show_stack.outputs.result }}"
-          EX2_IGNORES_OLD_ITEMS_RESULTS: "${{ steps.ex2_ignores_old_items.outputs.result }}"
-          EX2_KEEPS_STACK_RESULTS: "${{ steps.ex2_keeps_stack.outputs.result }}"
-          EX3_BINARY_RESULTS: "${{ steps.ex3_binary.outputs.result }}"
-          EX3_STARTS_WITH_EMPTY_STACK_RESULTS: "${{ steps.ex3_starts_with_empty_stack.outputs.result }}"
-          EX3_USES_THE_STACK_RESULTS: "${{ steps.ex3_uses_the_stack.outputs.result }}"
-          EX4_EDITOR_RESULTS: "${{ steps.ex4_editor.outputs.result }}"
-          EX4_STACK_FULL_RESULTS: "${{ steps.ex4_stack_full.outputs.result }}"
-          EX4_STARTS_WITH_EMPTY_STACK_RESULTS: "${{ steps.ex4_starts_with_empty_stack.outputs.result }}"
-          EX4_USES_THE_STACK_RESULTS: "${{ steps.ex4_uses_the_stack.outputs.result }}"
+          EX1_INITIAL_QUEUE_RESULTS: "${{ steps.ex1_initial_queue.outputs.result }}"
+          EX1_IS_EMPTY_RESULTS: "${{ steps.ex1_is_empty.outputs.result }}"
+          EX1_IS_FULL_RESULTS: "${{ steps.ex1_is_full.outputs.result }}"
+          EX2_ENQUEUE_RESULTS: "${{ steps.ex2_enqueue.outputs.result }}"
+          EX2_ENQUEUE_AFTER_DEQUEUE_RESULTS: "${{ steps.ex2_enqueue_after_dequeue.outputs.result }}"
+          EX2_ENQUEUE_WHEN_FULL_RESULTS: "${{ steps.ex2_enqueue_when_full.outputs.result }}"
+          EX2_USES_TAIL_POINTER_RESULTS: "${{ steps.ex2_uses_tail_pointer.outputs.result }}"
+          EX3_DEQUEUE_RESULTS: "${{ steps.ex3_dequeue.outputs.result }}"
+          EX3_DEQUEUE_WHEN_EMPTY_RESULTS: "${{ steps.ex3_dequeue_when_empty.outputs.result }}"
+          EX3_USES_HEAD_POINTER_RESULTS: "${{ steps.ex3_uses_head_pointer.outputs.result }}"
+          EX4_PEEK_RESULTS: "${{ steps.ex4_peek.outputs.result }}"
+          EX4_SHOW_QUEUE_RESULTS: "${{ steps.ex4_show_queue.outputs.result }}"
+          EX4_SHOW_IGNORES_OLD_ITEMS_RESULTS: "${{ steps.ex4_show_ignores_old_items.outputs.result }}"
+          EX5_CANTEEN_RESULTS: "${{ steps.ex5_canteen.outputs.result }}"
+          EX5_QUEUE_FULL_RESULTS: "${{ steps.ex5_queue_full.outputs.result }}"
+          EX5_STARTS_WITH_EMPTY_QUEUE_RESULTS: "${{ steps.ex5_starts_with_empty_queue.outputs.result }}"
+          EX5_USES_THE_QUEUE_RESULTS: "${{ steps.ex5_uses_the_queue.outputs.result }}"
         with:
-          runners: ex1_initial_stack,ex1_push,ex1_push_when_full,ex1_pop,ex1_pop_when_empty,ex1_uses_top_of_stack,ex2_show_stack,ex2_ignores_old_items,ex2_keeps_stack,ex3_binary,ex3_starts_with_empty_stack,ex3_uses_the_stack,ex4_editor,ex4_stack_full,ex4_starts_with_empty_stack,ex4_uses_the_stack
+          runners: ex1_initial_queue,ex1_is_empty,ex1_is_full,ex2_enqueue,ex2_enqueue_after_dequeue,ex2_enqueue_when_full,ex2_uses_tail_pointer,ex3_dequeue,ex3_dequeue_when_empty,ex3_uses_head_pointer,ex4_peek,ex4_show_queue,ex4_show_ignores_old_items,ex5_canteen,ex5_queue_full,ex5_starts_with_empty_queue,ex5_uses_the_queue
